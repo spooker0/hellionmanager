@@ -9,7 +9,7 @@ const url = require('url');
 const {
     autoUpdater
 } = require("electron-updater");
-const aboutWindow = require('electron-about-window').default
+const package = require('./package.json');
 
 let win;
 
@@ -30,9 +30,10 @@ function createWindow() {
         submenu: [{
             label: 'About',
             click: () => {
-                aboutWindow({
-                    icon_path: path.join(__dirname, 'build/icon.ico'),
-                    description: 'Hellion Server Settings Manager'
+                dialog.showMessageBox({
+                    type: 'info',
+                    title: 'About ' + package.name + ' v' + package.version,
+                    message: package.description
                 });
             }
         }, {

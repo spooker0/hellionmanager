@@ -1,9 +1,9 @@
 {
-    "name": "HellionManager",
-    "version": "0.0.3",
+    "name": "Hellion Manager",
+    "version": "0.0.4",
     "main": "app.js",
     "author": "rukqoa",
-    "description": "Hellion Server Settings Manager",
+    "description": "Hellion dedicated server settings manager. Point to the Hellion Dedicated Server folder in steamapps/common and let the program do the rest.",
     "devDependencies": {
         "electron": "^1.4.15",
         "electron-builder": "^12.3.1"
@@ -11,8 +11,7 @@
     "dependencies": {
         "json-bigint": "0.2.3",
         "fs-extra": "2.0.0",
-        "electron-updater": "^1.4.2",
-        "electron-about-window": "1.6.1"
+        "electron-updater": "^1.4.2"
     },
     "build": {
         "publish": [{
