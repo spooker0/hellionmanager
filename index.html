@@ -14,14 +14,15 @@
 			background-color: red;
 		}
 
-		#save-structures-btn {
+		table {
 			margin-top: 1em;
 		}
 
 		#global-settings-div,
 		#save-settings-div,
 		#structures-spawn-table,
-		#save-structures-btn {
+		#save-structures-btn,
+		#resources-spawn-table {
 			display: none;
 		}
 
@@ -31,6 +32,7 @@
 
 		table {
 			margin-top: 1em;
+			margin-bottom: 1em;
 			font-family: arial, sans-serif;
 			border-collapse: collapse;
 			width: 100%;
@@ -74,6 +76,13 @@
 					<th>Spawn Chance</th>
 					<th>Min Health</th>
 					<th>Max Health</th>
+				</tr>
+			</table>
+			<table id='resources-spawn-table'>
+				<tr>
+					<th>Resource</th>
+					<th>Capacity</th>
+					<th>Quantity</th>
 				</tr>
 			</table>
 			<button id='save-structures-btn'>Save</button>

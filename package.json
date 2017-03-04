@@ -11,7 +11,8 @@
     "dependencies": {
         "json-bigint": "0.2.3",
         "fs-extra": "2.0.0",
-        "electron-updater": "^1.4.2"
+        "electron-updater": "^1.4.2",
+        "electron-about-window": "1.6.1"
     },
     "build": {
         "publish": [{

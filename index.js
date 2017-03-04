@@ -13,15 +13,11 @@ let chooseFolderBtn = document.getElementById('choose-folder-btn');
 let globalSettingsDiv = document.getElementById('global-settings-div');
 let saveSettingsDiv = document.getElementById('save-settings-div');
 let structuresSpawnTable = document.getElementById('structures-spawn-table');
+let resourcesSpawnTable = document.getElementById('resources-spawn-table');
 let saveStructuresBtn = document.getElementById('save-structures-btn');
 
 window.onload = function() {
     chooseFolderBtn.addEventListener('click', pickFolder);
-    // globalSettingsDiv.style.display = 'none';
-    // saveSettingsDiv.style.display = 'none';
-    // structuresSpawnTable.style.display = 'none';
-    // saveStructuresBtn.style.display = 'none';
-    // chooseFolderBtn.style.backgroundColor = 'red';
 }
 
 function pickFolder() {
@@ -48,7 +44,9 @@ function findFiles(folder) {
 
     // Backup Data folder
     try {
-        fse.copySync(folder + '/Data', folder + '/BackupData');
+        fse.copySync(folder + '/Data', folder + '/BackupData', {
+            overwrite: false
+        });
     } catch (e) {
         console.log(e)
         dialog.showErrorBox('Backup failed', 'Failed to backup Data folder. Quitting now!');
@@ -121,6 +119,7 @@ function populateStructure(event) {
     if (structureName === 'default') {
         console.log('No such structures found!');
         structuresSpawnTable.style.display = 'none';
+        resourcesSpawnTable.style.display = 'none';
         return;
     }
 
@@ -136,10 +135,10 @@ function populateStructure(event) {
 
     // Clean and create default
     structuresSpawnTable.innerHTML = '<tr><th>Item</th><th>Respawn (s)</th><th>Spawn Chance</th><th>Min Health</th><th>Max Health</th></tr>';
+    resourcesSpawnTable.innerHTML = '<tr><th>Resource</th><th>Capacity</th><th>Quantity</th></tr>';
 
     // Turn each object into row
-    let objectsInStructure = structure['DynamicObjects'];
-    objectsInStructure.forEach(function(v) {
+    structure['DynamicObjects'].forEach(function(v) {
         let arenaItem = v['SpawnSettings'].find(function(x) {
             return x['Case'] === 0;
         });
@@ -199,7 +198,36 @@ function populateStructure(event) {
         }
     });
 
+    // One for each resource
+    structure['ResourceContainers'].forEach(function(v) {
+        let resourceRow = document.createElement('tr');
+
+        let resourceItemName = document.createElement('td');
+        resourceItemName.innerHTML = v['CargoCompartment']['Name'];
+
+        let resourceCapacity = document.createElement('td');
+        resourceCapacity.innerHTML = v['CargoCompartment']['Capacity'];
+        resourceCapacity.setAttribute('contenteditable', 'true');
+        resourceCapacity.addEventListener('input', function() {
+            v['CargoCompartment']['Capacity'] = +resourceCapacity.innerHTML.replace(/[^\d\.]*/g, '');
+        });
+
+        let resourceQuantity = document.createElement('td');
+        resourceQuantity.innerHTML = v['CargoCompartment']['Resources'][0]['Quantity'];
+        resourceQuantity.setAttribute('contenteditable', 'true');
+        resourceQuantity.addEventListener('input', function() {
+            v['CargoCompartment']['Resources'][0]['Quantity'] = +resourceQuantity.innerHTML.replace(/[^\d\.]*/g, '');
+        });
+
+        resourceRow.appendChild(resourceItemName);
+        resourceRow.appendChild(resourceCapacity);
+        resourceRow.appendChild(resourceQuantity);
+
+        resourcesSpawnTable.appendChild(resourceRow);
+    });
+
     structuresSpawnTable.style.display = 'block';
+    resourcesSpawnTable.style.display = 'block';
     saveStructuresBtn.style.display = 'block';
 
     saveStructuresBtn.addEventListener('click', saveStructures);
@@ -207,4 +235,9 @@ function populateStructure(event) {
 
 function saveStructures() {
     fs.writeFileSync(structuresFile, JSONbig.stringify(structures, null, 2), 'utf8');
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Save Complete!',
+        message: 'Your changes have been saved to the Data/Structures.json file.'
+    });
 }
