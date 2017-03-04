@@ -1,14 +1,15 @@
 const {
     app,
     BrowserWindow,
-    Menu
+    Menu,
+    dialog
 } = require('electron');
 const path = require('path');
 const url = require('url');
 const {
     autoUpdater
 } = require("electron-updater");
-
+const aboutWindow = require('electron-about-window').default
 
 let win;
 
@@ -29,7 +30,10 @@ function createWindow() {
         submenu: [{
             label: 'About',
             click: () => {
-                console.log('About Clicked');
+                aboutWindow({
+                    icon_path: path.join(__dirname, 'build/icon.ico'),
+                    description: 'Hellion Server Settings Manager'
+                });
             }
         }, {
             type: 'separator'
