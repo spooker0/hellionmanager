@@ -1,6 +1,7 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    Menu
 } = require('electron');
 const path = require('path');
 const url = require('url');
@@ -13,10 +14,8 @@ let win;
 
 function createWindow() {
     // Create the browser window.
-    win = new BrowserWindow({
-        width: 800,
-        height: 600
-    });
+    win = new BrowserWindow();
+    win.maximize();
 
     // and load the index.html of the app.
     win.loadURL(url.format({
@@ -24,6 +23,25 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }));
+
+    const menuTemplate = [{
+        label: 'Hellion Manager',
+        submenu: [{
+            label: 'About',
+            click: () => {
+                console.log('About Clicked');
+            }
+        }, {
+            type: 'separator'
+        }, {
+            label: 'Quit',
+            click: () => {
+                app.quit();
+            }
+        }]
+    }];
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu);
 
     win.on('closed', () => {
         win = null;
@@ -38,4 +56,8 @@ autoUpdater.on('update-downloaded', (ev, info) => {
 app.on('ready', function() {
     autoUpdater.checkForUpdates();
     createWindow();
+});
+
+app.on('window-all-closed', () => {
+    app.quit();
 });

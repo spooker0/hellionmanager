@@ -17,11 +17,11 @@ let saveStructuresBtn = document.getElementById('save-structures-btn');
 
 window.onload = function() {
     chooseFolderBtn.addEventListener('click', pickFolder);
-    globalSettingsDiv.style.display = 'none';
-    saveSettingsDiv.style.display = 'none';
-    structuresSpawnTable.style.display = 'none';
-    saveStructuresBtn.style.display = 'none';
-    chooseFolderBtn.style.backgroundColor = 'red';
+    // globalSettingsDiv.style.display = 'none';
+    // saveSettingsDiv.style.display = 'none';
+    // structuresSpawnTable.style.display = 'none';
+    // saveStructuresBtn.style.display = 'none';
+    // chooseFolderBtn.style.backgroundColor = 'red';
 }
 
 function pickFolder() {
