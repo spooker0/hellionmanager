@@ -1,9 +1,13 @@
 {
     "name": "HellionManager",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "app.js",
     "author": "rukqoa",
     "description": "Hellion Server Settings Manager",
+    "devDependencies": {
+        "electron": "^1.4.15",
+        "electron-builder": "^12.3.1"
+    },
     "dependencies": {
         "json-bigint": "0.2.3",
         "fs-extra": "2.0.0",
