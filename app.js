@@ -55,6 +55,12 @@ function createWindow() {
 
 
 autoUpdater.on('update-downloaded', (ev, info) => {
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Updating!',
+        message: 'A new version is out! Auto-updating to latest version!'
+    });
+
     autoUpdater.quitAndInstall();
 });
 
