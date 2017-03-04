@@ -1,0 +1,23 @@
+{
+    "name": "HellionManager",
+    "version": "0.0.1",
+    "main": "app.js",
+    "author": "rukqoa",
+    "description": "Hellion Server Settings Manager",
+    "dependencies": {
+        "json-bigint": "0.2.3",
+        "fs-extra": "2.0.0",
+        "electron-updater": "^1.4.2"
+    },
+    "build": {
+        "publish": [{
+            "provider": "github",
+            "owner": "rukqoa",
+            "repo": "hellionmanager"
+        }],
+        "appId": "com.rukqoa.hellionmanager",
+        "nsis": {
+            "perMachine": true
+        }
+    }
+}
